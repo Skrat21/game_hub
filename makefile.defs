@@ -1,0 +1,52 @@
+# Compatibility shim for the checked-in Eclipse Debug makefile.
+# Debug/makefile contains "-include ../makefile.defs"; this file is kept so
+# that hand-added include line stays harmless.
+#
+# This file used to append the src/HAL/IR, src/APP/Menu and src/APP/Offline
+# objects to OBJS by hand. Eclipse now lists those directories itself, in
+# Debug/src/HAL/IR/subdir.mk, Debug/src/APP/Menu/subdir.mk and
+# Debug/src/APP/Offline/subdir.mk, and those generated files use "./src/...o"
+# object names.
+#
+# Because $(filter-out) compares raw strings, the previous
+#   OBJS += $(filter-out $(OBJS),$(M4_MENU_OBJS))
+# never matched "src/...o" against "./src/...o", so all 8 of those objects were
+# passed to the linker twice and the build failed with errors such as:
+#   multiple definition of `HIR_prg'/`MENU_vText'/`OFFLINE_vRun' ...
+# The extra pattern rule below also produced two different targets
+# ("./src/HAL/IR/IR_prg.o" and "src/HAL/IR/IR_prg.o") for the same physical
+# object file, so a clean build compiled each of them twice with mismatched
+# flags (-DTRACE, -DUSE_FULL_ASSERT, -DOS_USE_TRACE_SEMIHOSTING_DEBUG,
+# -fno-move-loop-invariants and -O0 were missing in that copy).
+#
+# Therefore this file adds no objects and no rules: the Eclipse-generated
+# subdir.mk files are the single source of truth for the object list, and
+# "--gc-sections" plus the generated dependency files handle the rest.
+#
+# The new online-game modules (TicTacToe, Connect4, Memory, Yatzy) and the
+# OTA_LED driver ARE covered by their own generated subdir.mk files under
+# Debug/src/APP/TicTacToe/, .../Connect4/, .../Memory/, .../Yatzy/ and
+# Debug/src/HAL/OTA_LED/. Adding their objects here as well would duplicate
+# them in $(OBJS) (raw-string filter-out cannot dedupe across the ./src vs
+# src spellings) and the link would fail with "multiple definition".
+
+
+# ---------------------------------------------------------------------------
+# Windows "make clean" support
+# ---------------------------------------------------------------------------
+# Debug/makefile sets "RM := rm -rf" because Eclipse assumes an rm is in the
+# PATH. On a plain Windows install there is no rm, and since the clean recipe
+# marks the command with a leading "-" the failure is silently ignored: the
+# error "process_begin ... failed / make (e=2)" is printed but every object
+# file is left in place, so the next build is not a real rebuild.
+#
+# tools/rm.ps1 is a tiny rm -rf stand-in; it is invoked through "-File" so the
+# path list handed over by the generated recipe arrives intact in $args.
+#
+# SECONDARY_FLASH/SECONDARY_SIZE are deliberately not redefined here: the
+# generated makefile also uses them as target names, so their spelling must
+# stay untouched.
+ifeq ($(OS),Windows_NT)
+RM := powershell -NoProfile -ExecutionPolicy Bypass -File ../tools/rm.ps1
+endif
+

@@ -1,0 +1,15 @@
+src/HAL/ESP8266/ESP8266_prg.o: ../src/HAL/ESP8266/ESP8266_prg.c \
+ ../src/HAL/ESP8266/../../LIB/STD_TYPES.h \
+ ../src/HAL/ESP8266/../../MCAL/USART/USART_int.h \
+ ../src/HAL/ESP8266/../../MCAL/USART/../../LIB/STD_TYPES.h \
+ ../src/HAL/ESP8266/../../MCAL/SYSTICK/SYSTICK_int.h \
+ ../src/HAL/ESP8266/../../MCAL/SYSTICK/../../LIB/BIT_MATH.h \
+ ../src/HAL/ESP8266/../../MCAL/SYSTICK/../../LIB/STD_TYPES.h \
+ ../src/HAL/ESP8266/ESP8266_int.h
+../src/HAL/ESP8266/../../LIB/STD_TYPES.h:
+../src/HAL/ESP8266/../../MCAL/USART/USART_int.h:
+../src/HAL/ESP8266/../../MCAL/USART/../../LIB/STD_TYPES.h:
+../src/HAL/ESP8266/../../MCAL/SYSTICK/SYSTICK_int.h:
+../src/HAL/ESP8266/../../MCAL/SYSTICK/../../LIB/BIT_MATH.h:
+../src/HAL/ESP8266/../../MCAL/SYSTICK/../../LIB/STD_TYPES.h:
+../src/HAL/ESP8266/ESP8266_int.h:

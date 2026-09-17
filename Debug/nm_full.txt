@@ -1,0 +1,8 @@
+﻿arm-none-eabi-nm.exe : C:\Program Files (x86)\Arm GNU Toolchain arm-none-eabi\12.2 
+mpacbti-rel1\bin\arm-none-eabi-nm.exe: 'fixed project.elf': No such file
+At line:1 char:82
++ ... ect\Debug'; $nm = & arm-none-eabi-nm 'fixed project.elf' 2>&1 | Out-F ...
++                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (C:\Program File...': No such file:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 

@@ -1,0 +1,9 @@
+src/APP/HEXPARSER/HEXPARSER_prog.o: ../src/APP/HEXPARSER/HEXPARSER_prog.c \
+ ../src/APP/HEXPARSER/../../LIB/BIT_MATH.h \
+ ../src/APP/HEXPARSER/../../LIB/STD_TYPES.h \
+ ../src/APP/HEXPARSER/../../MCAL/FMI/FMI_int.h \
+ ../src/APP/HEXPARSER/HEXPARSER_int.h
+../src/APP/HEXPARSER/../../LIB/BIT_MATH.h:
+../src/APP/HEXPARSER/../../LIB/STD_TYPES.h:
+../src/APP/HEXPARSER/../../MCAL/FMI/FMI_int.h:
+../src/APP/HEXPARSER/HEXPARSER_int.h:

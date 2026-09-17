@@ -1,0 +1,65 @@
+﻿=== status_helper.php: game ids / helpers ===
+L21: //   $game_inactivity_timeout_map = ['memory' => 120];   // optional, per game
+L29: function ensure_status_dir() {
+L42: function game_inactivity_timeout_seconds($game = '') {
+L67: function ensure_main_path() {
+L83: function ensure_main_file() {
+L90: function parse_status_line($line) {
+L100: function update_main_status($game, $state) {
+L117: function status_known_games() {
+L118: return ['rps', 'xo', 'connect4', 'mathquiz', 'snakeladder', 'yatzy', 'memory'];
+L123: function recompute_main_status() {
+L164: function write_main_status_line($state, $game) {
+L192: function endGameAndSync($gameId, $roomId) {
+L218: function mark_game_dead_status($game, $event = 'limit_reached') {
+L268: function get_room_activity_time($room, $roomPath) {
+L274: function is_room_inactive($room, $roomPath, $timeoutSeconds) {
+L282: function sweep_room_path($roomId) {
+L288: function sweep_room_load($roomId) {
+L300: function sweep_room_save($roomId, $data) {
+L319: //   array-style  (connect4, xo, memory, rps, mathquiz, snakeladder):
+L321: //   string-style (yatzy): players[pid] = 'p1' with the flags in the parallel
+L325: function sweep_player_left_state($room) {
+L340: function sweep_all_players_hard_left($room) {
+L353: function sweep_finish_room($roomId, $room, $game, $reason, $event) {
+L377: function sweep_all_games() {
+L427: function player_leave_room($game, $roomId, $playerId, $soft) {
+L442: // yatzy-style rooms store the role string directly; the leave flags
+L465: function player_return_room($roomId, $playerId) {
+=== yatzy: status/categories ===
+L18: * p1_score, p2_score, last_player, last_action, category_chosen, points_scored
+L35: $STATUS_DIR = __DIR__ . '/status';
+L41: $idle = ['state' => 'DEAD', 'game' => 'yatzy', 'room' => '', 'event' => 'idle', 'status' => 'waiting', 'turn' => '', 'rolls_left' => 3, 'dice' => '', 'held_count' => 0, 'held_indices' => '', 'held_values' => '', 'p1_score' => 0, 'p2_score' => 0, 'last_player' => '', 'last_action' => '', 'category_chosen' => '', 'points_scored' => 0];
+L47: $parts[] = 'status=' . $idle['status'];
+L58: $parts[] = 'category_chosen=' . $idle['category_chosen'];
+L124: function calculate_score($category, $dice) {
+L128: switch ($category) {
+L173: $dir = __DIR__ . '/status';
+L211: function write_status_file($room, $event, $lastActionInfo = []) {
+L231: $cat = $lastActionInfo['category'] ?? 'none';
+L234: $state = ($room['status'] ?? '') === 'finished' ? 'DEAD' : (!empty($room['finished']) && $room['finished'] ? 'DEAD' : 'ALIVE');
+L237: 'status' => $room['status'],
+L248: 'category_chosen' => $cat,
+L263: $room['status'] = 'ended';
+L267: write_status_file($room, 'inactivity_timeout');
+L328: 'status'       => 'waiting',
+L341: write_status_file($room, 'create_room', ['action' => 'room_created']);
+L365: respond(['ok' => true, 'room_id' => $roomId, 'player_id' => $playerId, 'role' => $room['players'][$playerId], 'status' => $room['status'], 'end_reason' => $room['end_reason'] ?? '']);
+L372: $room['status'] = 'playing';
+L374: write_status_file($room, 'player_joined', ['action' => 'player_joined']);
+L376: respond(['ok' => true, 'room_id' => $roomId, 'player_id' => $playerId, 'role' => 'p2', 'status' => 'playing', 'end_reason' => $room['end_reason'] ?? '']);
+L398: write_status_file($room, 'dice_roll', [
+L422: write_status_file($room, 'toggle_hold', [
+L434: $category = $_REQUEST['category'] ?? '';
+L444: if (isset($pData['scorecard'][$category])) respond(['ok' => false, 'error' => 'category_already_used']);
+L446: $pts = calculate_score($category, $room['dice']);
+L447: $pData['scorecard'][$category] = $pts;
+L449: if (in_array($category, ['ones', 'twos', 'threes', 'fours', 'fives', 'sixes'])) {
+L464: $room['status'] = 'finished';
+L474: write_status_file($room, 'score_category', [
+L476: 'action'   => 'score_category',
+L477: 'category' => $category,
+L480: if ($room['status'] === 'finished') {
+L481: write_status_file($room, 'game_finished', [
+L484: 'category' => $category,
+L492: case 'status': {

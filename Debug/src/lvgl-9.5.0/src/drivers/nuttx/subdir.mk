@@ -1,0 +1,48 @@
+################################################################################
+# Automatically-generated file. Do not edit!
+################################################################################
+
+# Add inputs and outputs from these tool invocations to the build variables 
+C_SRCS += \
+../src/lvgl-9.5.0/src/drivers/nuttx/lv_nuttx_cache.c \
+../src/lvgl-9.5.0/src/drivers/nuttx/lv_nuttx_entry.c \
+../src/lvgl-9.5.0/src/drivers/nuttx/lv_nuttx_fbdev.c \
+../src/lvgl-9.5.0/src/drivers/nuttx/lv_nuttx_image_cache.c \
+../src/lvgl-9.5.0/src/drivers/nuttx/lv_nuttx_lcd.c \
+../src/lvgl-9.5.0/src/drivers/nuttx/lv_nuttx_libuv.c \
+../src/lvgl-9.5.0/src/drivers/nuttx/lv_nuttx_mouse.c \
+../src/lvgl-9.5.0/src/drivers/nuttx/lv_nuttx_profiler.c \
+../src/lvgl-9.5.0/src/drivers/nuttx/lv_nuttx_touchscreen.c 
+
+OBJS += \
+./src/lvgl-9.5.0/src/drivers/nuttx/lv_nuttx_cache.o \
+./src/lvgl-9.5.0/src/drivers/nuttx/lv_nuttx_entry.o \
+./src/lvgl-9.5.0/src/drivers/nuttx/lv_nuttx_fbdev.o \
+./src/lvgl-9.5.0/src/drivers/nuttx/lv_nuttx_image_cache.o \
+./src/lvgl-9.5.0/src/drivers/nuttx/lv_nuttx_lcd.o \
+./src/lvgl-9.5.0/src/drivers/nuttx/lv_nuttx_libuv.o \
+./src/lvgl-9.5.0/src/drivers/nuttx/lv_nuttx_mouse.o \
+./src/lvgl-9.5.0/src/drivers/nuttx/lv_nuttx_profiler.o \
+./src/lvgl-9.5.0/src/drivers/nuttx/lv_nuttx_touchscreen.o 
+
+C_DEPS += \
+./src/lvgl-9.5.0/src/drivers/nuttx/lv_nuttx_cache.d \
+./src/lvgl-9.5.0/src/drivers/nuttx/lv_nuttx_entry.d \
+./src/lvgl-9.5.0/src/drivers/nuttx/lv_nuttx_fbdev.d \
+./src/lvgl-9.5.0/src/drivers/nuttx/lv_nuttx_image_cache.d \
+./src/lvgl-9.5.0/src/drivers/nuttx/lv_nuttx_lcd.d \
+./src/lvgl-9.5.0/src/drivers/nuttx/lv_nuttx_libuv.d \
+./src/lvgl-9.5.0/src/drivers/nuttx/lv_nuttx_mouse.d \
+./src/lvgl-9.5.0/src/drivers/nuttx/lv_nuttx_profiler.d \
+./src/lvgl-9.5.0/src/drivers/nuttx/lv_nuttx_touchscreen.d 
+
+
+# Each subdirectory must supply rules for building sources it contributes
+src/lvgl-9.5.0/src/drivers/nuttx/%.o: ../src/lvgl-9.5.0/src/drivers/nuttx/%.c
+	@echo 'Building file: $<'
+	@echo 'Invoking: Cross ARM GNU C Compiler'
+	arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -Og -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -ffreestanding -fno-move-loop-invariants -Wall -Wextra  -g3 -DDEBUG -DUSE_FULL_ASSERT -DTRACE -DOS_USE_TRACE_SEMIHOSTING_DEBUG -DSTM32F401xC -DUSE_HAL_DRIVER -DHSE_VALUE=25000000 -I"../include" -I"../system/include" -I"../system/include/cmsis" -I"../system/include/stm32f4-hal" -std=gnu11 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -c -o "$@" "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+
